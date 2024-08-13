@@ -1,4 +1,5 @@
 class AppBarNote extends HTMLElement {
+    // Constructor untuk inisialisasi komponen
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -9,6 +10,7 @@ class AppBarNote extends HTMLElement {
         this.shadowRoot.querySelector('#toggleTheme').addEventListener('click', this.toggleTheme.bind(this));
     }
 
+    // Fungsi untuk merender konten shadow DOM
     render() {
         this.shadowRoot.innerHTML = `
             <style>
@@ -46,6 +48,7 @@ class AppBarNote extends HTMLElement {
         `;
     }
 
+    // Fungsi untuk mengganti tema
     toggleTheme() {
         document.body.classList.toggle('dark-mode');
         this.updateTheme();

@@ -1,13 +1,16 @@
 class EditModalNote extends HTMLElement {
+    // Constructor untuk inisialisasi komponen
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
+    // Callback yang dipanggil ketika komponen terhubung ke DOM
     connectedCallback() {
         this.render();
     }
 
+    // Fungsi untuk merender konten shadow DOM
     render() {
         this.shadowRoot.innerHTML = `
             <style>
@@ -56,12 +59,16 @@ class EditModalNote extends HTMLElement {
             </div>
         `;
 
+        // Menambahkan event listener untuk tombol simpan dan batal
         this.shadowRoot.querySelector('#saveEdit').addEventListener('click', this.handleSave.bind(this));
         this.shadowRoot.querySelector('#cancelEdit').addEventListener('click', this.close.bind(this));
+
+        // Menambahkan event listener untuk validasi input judul dan isi catatan
         this.shadowRoot.querySelector('#editTitle').addEventListener('input', this.validateTitle.bind(this));
         this.shadowRoot.querySelector('#editbody').addEventListener('input', this.validatebody.bind(this));
     }
 
+    // Fungsi untuk membuka modal dengan data catatan yang akan diedit
     open(note) {
         this.note = note;
         this.shadowRoot.querySelector('#editTitle').value = note.title;
@@ -73,6 +80,7 @@ class EditModalNote extends HTMLElement {
         this.shadowRoot.querySelector('.modal').style.display = 'none';
     }
 
+    // Fungsi untuk validasi judul catatan
     validateTitle() {
         const title = this.shadowRoot.querySelector('#editTitle').value;
         const titleError = this.shadowRoot.querySelector('#editTitleError');
@@ -83,6 +91,7 @@ class EditModalNote extends HTMLElement {
         }
     }
 
+    // Fungsi untuk validasi isi catatan
     validatebody() {
         const body = this.shadowRoot.querySelector('#editbody').value;
         const bodyError = this.shadowRoot.querySelector('#editbodyError');
@@ -93,6 +102,7 @@ class EditModalNote extends HTMLElement {
         }
     }
 
+    // Fungsi untuk menangani penyimpanan catatan yang telah diedit
     handleSave() {
         const title = this.shadowRoot.querySelector('#editTitle').value;
         const body = this.shadowRoot.querySelector('#editbody').value;

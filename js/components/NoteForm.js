@@ -49,24 +49,29 @@ class NoteForm extends HTMLElement {
   }
 
   validateTitle() {
-      const title = this.shadowRoot.querySelector('#title').value;
-      const titleError = this.shadowRoot.querySelector('#titleError');
-      if (title.length < 3) {
-          titleError.textbody = 'Judul harus minimal 3 karakter';
-      } else {
-          titleError.textbody = '';
-      }
-  }
+    const title = this.shadowRoot.querySelector('#title').value;
+    const titleError = this.shadowRoot.querySelector('#titleError');
+    if (title.length < 3) {
+        titleError.textContent = 'Judul harus minimal 3 karakter';
+    } else if (title.length > 100) {
+    titleError.textContent = 'Judul tidak boleh lebih dari 100 karakter';
+    }else {
+        titleError.textContent = '';
+    }
+}
+
 
   validatebody() {
-      const body = this.shadowRoot.querySelector('#body').value;
-      const bodyError = this.shadowRoot.querySelector('#bodyError');
-      if (body.length < 10) {
-          bodyError.textbody = 'Isi catatan harus minimal 10 karakter';
-      } else {
-          bodyError.textbody = '';
-      }
-  }
+    const body = this.shadowRoot.querySelector('#body').value;
+    const bodyError = this.shadowRoot.querySelector('#bodyError');
+    if (body.length < 10) {
+        bodyError.textContent = 'Isi catatan harus minimal 10 karakter';
+    } else if (body.length > 255) {
+        bodyError.textContent = 'Isi catatan tidak boleh lebih dari 255 karakter'; // Tambahkan validasi untuk panjang maksimum
+    } else {
+        bodyError.textContent = ''; // Jika tidak ada error, bersihkan pesan error
+    }
+}
 
   handleSubmit(event) {
       event.preventDefault();
