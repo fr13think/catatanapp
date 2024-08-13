@@ -3,14 +3,21 @@ let notes = [
   { id: 2, title: 'Catatan 2', content: 'Isi catatan 2', archived: false },
 ];
 
-function renderNotes() {
+function renderNotes(searchTerm = '') {
   const notesContainer = document.getElementById('notesGrid');
   notesContainer.innerHTML = '';
   
-  const activeNotes = notes.filter(note => !note.archived);
-  const archivedNotes = notes.filter(note => note.archived);
+  const filteredNotes = notes.filter(note => 
+      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const activeNotes = filteredNotes.filter(note => !note.archived);
+  const archivedNotes = filteredNotes.filter(note => note.archived);
 
   const renderNotesList = (notesList, title, className) => {
+      if (notesList.length === 0) return;
+
       const section = document.createElement('div');
       section.className = 'notes-section';
       section.innerHTML = `<h2>${title}</h2>`;
@@ -75,11 +82,19 @@ document.querySelector('edit-modal').addEventListener('save-edit', handleSaveEdi
 // Inisialisasi aplikasi
 renderNotes();
 
+// Pencarian
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  renderNotes(e.target.value);
+});
+
 // Theme toggle
 document.body.addEventListener('DOMSubtreeModified', () => {
   const isDarkMode = document.body.classList.contains('dark-mode');
-  document.querySelectorAll('note-item').forEach(item => {
-      item.style.setProperty('--note-bg-color', isDarkMode ? '#555' : '#f9f9f9');
-      item.style.setProperty('--note-text-color', isDarkMode ? '#fff' : '#000');
-  });
+    document.querySelectorAll('note-item').forEach(item => {
+        item.style.setProperty('--note-bg-color', isDarkMode ? '#2C2C2E' : '#FFFFFF');
+        item.style.setProperty('--note-text-color', isDarkMode ? '#FFFFFF' : '#000000');
+    });
+    
+    // Perbarui tema untuk footer
+    document.querySelector('app-footer').updateTheme();
 });

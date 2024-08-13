@@ -14,19 +14,25 @@ class NoteItem extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    background-color: var(--note-bg-color, #f9f9f9);
-                    border: 1px solid #ddd;
-                    border-radius: 4px;
+                    background-color: var(--note-bg-color, #FFFFFF);
+                    border-radius: 10px;
                     padding: 16px;
-                    color: var(--note-text-color, #000);
+                    color: var(--note-text-color, #000000);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
                 }
                 h2 {
                     margin-top: 0;
+                    font-weight: 600;
                 }
                 button {
                     margin-top: 8px;
-                    padding: 4px 8px;
+                    padding: 8px 16px;
                     cursor: pointer;
+                    background-color: var(--accent-color, #007AFF);
+                    color: white;
+                    border: none;
+                    border-radius: 10px;
+                    font-size: 14px;
                 }
                 .archived {
                     opacity: 0.7;
