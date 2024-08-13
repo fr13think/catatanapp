@@ -19,7 +19,7 @@ function renderNotes(searchTerm = '') {
 
       const section = document.createElement('div');
       section.className = 'notes-section';
-      section.innerHTML = `<h2>${title}</h2>`;
+      section.innerHTML = `<h2>${title} (<span>${notesList.length}</span>)</h2>`;
       const grid = document.createElement('div');
       grid.className = `notes-grid ${className}`;
       notesList.forEach(note => {
