@@ -1,6 +1,7 @@
 let notes = [
-  { id: 1, title: 'Catatan 1', content: 'Isi catatan 1', archived: false },
-  { id: 2, title: 'Catatan 2', content: 'Isi catatan 2', archived: false },
+  { id: 1, title: 'Catatan 1', content: 'Isi catatan 1', archived: false, date: new Date().toISOString() },
+  { id: 2, title: 'Catatan 2', content: 'Isi catatan 2', archived: false, date: new Date().toISOString() },
+  { id: 3, title: 'Catatan 3', content: 'Isi catatan 3', archived: false, date: new Date().toISOString() },
 ];
 
 function renderNotes(searchTerm = '') {
@@ -37,6 +38,18 @@ function renderNotes(searchTerm = '') {
 
   renderNotesList(activeNotes, 'Catatan Aktif', 'active-notes');
   renderNotesList(archivedNotes, 'Catatan Terarsip', 'archived-notes');
+}
+
+function handleSaveNote(event) {
+  const { id, title, content, editMode } = event.detail;
+  if (editMode) {
+      const index = notes.findIndex(note => note.id === id);
+      notes[index] = { ...notes[index], title, content, date: new Date().toISOString() };
+  } else {
+      const newId = notes.length > 0 ? Math.max(...notes.map(note => note.id)) + 1 : 1;
+      notes.push({ id: newId, title, content, archived: false, date: new Date().toISOString() });
+  }
+  renderNotes();
 }
 
 function handleDeleteNote(event) {

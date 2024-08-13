@@ -1,4 +1,4 @@
-class Footer extends HTMLElement {
+class FooterNote extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -32,4 +32,4 @@ class Footer extends HTMLElement {
     }
 }
 
-customElements.define('app-footer', Footer);
+customElements.define('app-footer', FooterNote);

@@ -1,4 +1,4 @@
-class EditModal extends HTMLElement {
+class EditModalNote extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -108,4 +108,4 @@ class EditModal extends HTMLElement {
     }
 }
 
-customElements.define('edit-modal', EditModal);
+customElements.define('edit-modal', EditModalNote);

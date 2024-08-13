@@ -1,4 +1,4 @@
-class AppBar extends HTMLElement {
+class AppBarNote extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -40,7 +40,7 @@ class AppBar extends HTMLElement {
                 }
             </style>
             <h1>Catatan Harian</h1>
-            <button id="toggleTheme">Toggle Theme</button>
+            <button id="toggleTheme">Dark/Light Mode</button>
         `;
     }
 
@@ -56,4 +56,4 @@ class AppBar extends HTMLElement {
     }
 }
 
-customElements.define('app-bar', AppBar);
+customElements.define('app-bar', AppBarNote);
