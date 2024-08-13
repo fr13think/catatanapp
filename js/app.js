@@ -36,6 +36,7 @@ function renderNotes(searchTerm = '') {
       grid.className = `notes-grid ${className}`;
       // Iterasi melalui setiap catatan dan membuat elemen catatan
       notesList.forEach(note => {
+          // Custom attribute 'note'
           const noteItem = document.createElement('note-item');
           // Menetapkan data catatan sebagai atribut
           noteItem.setAttribute('note', JSON.stringify(note));
