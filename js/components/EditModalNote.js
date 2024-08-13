@@ -21,7 +21,7 @@ class EditModalNote extends HTMLElement {
                     height: 100%;
                     background-color: rgba(0,0,0,0.4);
                 }
-                .modal-content {
+                .modal-body {
                     background-color: #fefefe;
                     margin: 15% auto;
                     padding: 20px;
@@ -44,12 +44,12 @@ class EditModalNote extends HTMLElement {
                 }
             </style>
             <div class="modal">
-                <div class="modal-content">
+                <div class="modal-body">
                     <h2>Edit Catatan</h2>
                     <input type="text" id="editTitle" placeholder="Judul" required>
                     <div class="error" id="editTitleError"></div>
-                    <textarea id="editContent" placeholder="Isi catatan" required></textarea>
-                    <div class="error" id="editContentError"></div>
+                    <textarea id="editbody" placeholder="Isi catatan" required></textarea>
+                    <div class="error" id="editbodyError"></div>
                     <button id="saveEdit">Simpan</button>
                     <button id="cancelEdit">Batal</button>
                 </div>
@@ -59,13 +59,13 @@ class EditModalNote extends HTMLElement {
         this.shadowRoot.querySelector('#saveEdit').addEventListener('click', this.handleSave.bind(this));
         this.shadowRoot.querySelector('#cancelEdit').addEventListener('click', this.close.bind(this));
         this.shadowRoot.querySelector('#editTitle').addEventListener('input', this.validateTitle.bind(this));
-        this.shadowRoot.querySelector('#editContent').addEventListener('input', this.validateContent.bind(this));
+        this.shadowRoot.querySelector('#editbody').addEventListener('input', this.validatebody.bind(this));
     }
 
     open(note) {
         this.note = note;
         this.shadowRoot.querySelector('#editTitle').value = note.title;
-        this.shadowRoot.querySelector('#editContent').value = note.content;
+        this.shadowRoot.querySelector('#editbody').value = note.body;
         this.shadowRoot.querySelector('.modal').style.display = 'block';
     }
 
@@ -77,31 +77,31 @@ class EditModalNote extends HTMLElement {
         const title = this.shadowRoot.querySelector('#editTitle').value;
         const titleError = this.shadowRoot.querySelector('#editTitleError');
         if (title.length < 3) {
-            titleError.textContent = 'Judul harus minimal 3 karakter';
+            titleError.textbody = 'Judul harus minimal 3 karakter';
         } else {
-            titleError.textContent = '';
+            titleError.textbody = '';
         }
     }
 
-    validateContent() {
-        const content = this.shadowRoot.querySelector('#editContent').value;
-        const contentError = this.shadowRoot.querySelector('#editContentError');
-        if (content.length < 10) {
-            contentError.textContent = 'Isi catatan harus minimal 10 karakter';
+    validatebody() {
+        const body = this.shadowRoot.querySelector('#editbody').value;
+        const bodyError = this.shadowRoot.querySelector('#editbodyError');
+        if (body.length < 10) {
+            bodyError.textbody = 'Isi catatan harus minimal 10 karakter';
         } else {
-            contentError.textContent = '';
+            bodyError.textbody = '';
         }
     }
 
     handleSave() {
         const title = this.shadowRoot.querySelector('#editTitle').value;
-        const content = this.shadowRoot.querySelector('#editContent').value;
+        const body = this.shadowRoot.querySelector('#editbody').value;
 
-        if (title.length < 3 || content.length < 10) {
+        if (title.length < 3 || body.length < 10) {
             return;
         }
 
-        const updatedNote = { ...this.note, title, content };
+        const updatedNote = { ...this.note, title, body };
         const event = new CustomEvent('save-edit', { detail: updatedNote });
         this.dispatchEvent(event);
         this.close();

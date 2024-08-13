@@ -37,48 +37,48 @@ class NoteForm extends HTMLElement {
           <form id="noteForm">
               <input type="text" id="title" placeholder="Judul" required>
               <div class="error" id="titleError"></div>
-              <textarea id="content" placeholder="Isi catatan" required></textarea>
-              <div class="error" id="contentError"></div>
+              <textarea id="body" placeholder="Isi catatan" required></textarea>
+              <div class="error" id="bodyError"></div>
               <button type="submit">${this.editMode ? 'Update' : 'Tambah'} Catatan</button>
           </form>
       `;
 
       this.shadowRoot.querySelector('#noteForm').addEventListener('submit', this.handleSubmit.bind(this));
       this.shadowRoot.querySelector('#title').addEventListener('input', this.validateTitle.bind(this));
-      this.shadowRoot.querySelector('#content').addEventListener('input', this.validateContent.bind(this));
+      this.shadowRoot.querySelector('#body').addEventListener('input', this.validatebody.bind(this));
   }
 
   validateTitle() {
       const title = this.shadowRoot.querySelector('#title').value;
       const titleError = this.shadowRoot.querySelector('#titleError');
       if (title.length < 3) {
-          titleError.textContent = 'Judul harus minimal 3 karakter';
+          titleError.textbody = 'Judul harus minimal 3 karakter';
       } else {
-          titleError.textContent = '';
+          titleError.textbody = '';
       }
   }
 
-  validateContent() {
-      const content = this.shadowRoot.querySelector('#content').value;
-      const contentError = this.shadowRoot.querySelector('#contentError');
-      if (content.length < 10) {
-          contentError.textContent = 'Isi catatan harus minimal 10 karakter';
+  validatebody() {
+      const body = this.shadowRoot.querySelector('#body').value;
+      const bodyError = this.shadowRoot.querySelector('#bodyError');
+      if (body.length < 10) {
+          bodyError.textbody = 'Isi catatan harus minimal 10 karakter';
       } else {
-          contentError.textContent = '';
+          bodyError.textbody = '';
       }
   }
 
   handleSubmit(event) {
       event.preventDefault();
       const title = this.shadowRoot.querySelector('#title').value;
-      const content = this.shadowRoot.querySelector('#content').value;
+      const body = this.shadowRoot.querySelector('#body').value;
 
-      if (title.length < 3 || content.length < 10) {
+      if (title.length < 3 || body.length < 10) {
           return;
       }
 
       const noteEvent = new CustomEvent('save-note', {
-          detail: { id: this.editId, title, content, editMode: this.editMode }
+          detail: { id: this.editId, title, body, editMode: this.editMode }
       });
       this.dispatchEvent(noteEvent);
 
@@ -89,8 +89,8 @@ class NoteForm extends HTMLElement {
       this.editMode = true;
       this.editId = note.id;
       this.shadowRoot.querySelector('#title').value = note.title;
-      this.shadowRoot.querySelector('#content').value = note.content;
-      this.shadowRoot.querySelector('button[type="submit"]').textContent = 'Update Catatan';
+      this.shadowRoot.querySelector('#body').value = note.body;
+      this.shadowRoot.querySelector('button[type="submit"]').textbody = 'Update Catatan';
       this.render();
   }
 
@@ -98,7 +98,7 @@ class NoteForm extends HTMLElement {
       this.editMode = false;
       this.editId = null;
       this.shadowRoot.querySelector('#noteForm').reset();
-      this.shadowRoot.querySelector('button[type="submit"]').textContent = 'Tambah Catatan';
+      this.shadowRoot.querySelector('button[type="submit"]').textbody = 'Tambah Catatan';
   }
 }
 

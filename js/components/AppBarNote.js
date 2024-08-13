@@ -14,7 +14,7 @@ class AppBarNote extends HTMLElement {
             <style>
                 :host {
                     display: flex;
-                    justify-content: space-between;
+                    justify-body: space-between;
                     align-items: center;
                     background-color: var(--background-light, #F2F2F7);
                     color: var(--text-light, #000000);
@@ -26,21 +26,23 @@ class AppBarNote extends HTMLElement {
                     font-weight: 600;
                 }
                 button {
-                    background-color: var(--accent-color, #007AFF);
+                    background-color: transparent;
                     border: none;
-                    color: white;
-                    padding: 10px 20px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 4px 2px;
                     cursor: pointer;
-                    border-radius: 10px;
+                    font-size: 24px;
+                }
+                .dark-mode-icon {
+                    display: none;
+                }
+                .light-mode-icon {
+                    display: inline;
                 }
             </style>
             <h1>Catatan Harian</h1>
-            <button id="toggleTheme">Dark/Light Mode</button>
+            <button id="toggleTheme">
+                <span class="dark-mode-icon">🌙</span>
+                <span class="light-mode-icon">☀️</span>
+            </button>
         `;
     }
 
@@ -53,6 +55,17 @@ class AppBarNote extends HTMLElement {
         const isDarkMode = document.body.classList.contains('dark-mode');
         this.style.setProperty('--background-light', isDarkMode ? '#1C1C1E' : '#F2F2F7');
         this.style.setProperty('--text-light', isDarkMode ? '#FFFFFF' : '#000000');
+
+        const darkModeIcon = this.shadowRoot.querySelector('.dark-mode-icon');
+        const lightModeIcon = this.shadowRoot.querySelector('.light-mode-icon');
+
+        if (isDarkMode) {
+            darkModeIcon.style.display = 'inline';
+            lightModeIcon.style.display = 'none';
+        } else {
+            darkModeIcon.style.display = 'none';
+            lightModeIcon.style.display = 'inline';
+        }
     }
 }
 

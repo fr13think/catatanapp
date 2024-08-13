@@ -1,8 +1,6 @@
-let notes = [
-  { id: 1, title: 'Catatan 1', content: 'Isi catatan 1', archived: false, date: new Date().toISOString() },
-  { id: 2, title: 'Catatan 2', content: 'Isi catatan 2', archived: false, date: new Date().toISOString() },
-  { id: 3, title: 'Catatan 3', content: 'Isi catatan 3', archived: false, date: new Date().toISOString() },
-];
+import { notesData } from './data/notes.js';
+
+let notes = notesData;
 
 function renderNotes(searchTerm = '') {
   const notesContainer = document.getElementById('notesGrid');
@@ -10,7 +8,7 @@ function renderNotes(searchTerm = '') {
   
   const filteredNotes = notes.filter(note => 
       note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchTerm.toLowerCase())
+      note.body.toLowerCase().includes(searchTerm.toLowerCase())
   );
   
   const activeNotes = filteredNotes.filter(note => !note.archived);
@@ -41,16 +39,17 @@ function renderNotes(searchTerm = '') {
 }
 
 function handleSaveNote(event) {
-  const { id, title, content, editMode } = event.detail;
+  const { id, title, body, editMode } = event.detail;
   if (editMode) {
       const index = notes.findIndex(note => note.id === id);
-      notes[index] = { ...notes[index], title, content, date: new Date().toISOString() };
+      notes[index] = { ...notes[index], title, body: body, createdAt: new Date().toISOString() };
   } else {
-      const newId = notes.length > 0 ? Math.max(...notes.map(note => note.id)) + 1 : 1;
-      notes.push({ id: newId, title, content, archived: false, date: new Date().toISOString() });
+      const newId = crypto.randomUUID();
+      notes.push({ id: newId, title, body: body, createdAt: new Date().toISOString(), archived: false });
   }
   renderNotes();
 }
+
 
 function handleDeleteNote(event) {
   const id = event.detail.id;
@@ -58,17 +57,6 @@ function handleDeleteNote(event) {
   renderNotes();
 }
 
-function handleSaveNote(event) {
-  const { id, title, content, editMode } = event.detail;
-  if (editMode) {
-      const index = notes.findIndex(note => note.id === id);
-      notes[index] = { ...notes[index], title, content };
-  } else {
-      const newId = notes.length > 0 ? Math.max(...notes.map(note => note.id)) + 1 : 1;
-      notes.push({ id: newId, title, content, archived: false });
-  }
-  renderNotes();
-}
 
 function handleEditNote(event) {
   const editModal = document.querySelector('edit-modal');
@@ -78,9 +66,10 @@ function handleEditNote(event) {
 function handleSaveEdit(event) {
   const updatedNote = event.detail;
   const index = notes.findIndex(note => note.id === updatedNote.id);
-  notes[index] = { ...notes[index], ...updatedNote };
+  notes[index] = { ...notes[index], ...updatedNote, createdAt: new Date().toISOString() };
   renderNotes();
 }
+
 
 function handleToggleArchive(event) {
   const noteToToggle = event.detail;

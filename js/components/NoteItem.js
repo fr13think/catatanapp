@@ -10,7 +10,10 @@ class NoteItem extends HTMLElement {
 
     render() {
         const note = JSON.parse(this.getAttribute('note'));
-        note.date = new Date().toLocaleDateString('id-ID');
+        const date = new Date(note.createdAt);
+        note.date = date.toLocaleDateString('id-ID');
+        note.time = date.toLocaleTimeString('id-ID');
+
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -41,8 +44,8 @@ class NoteItem extends HTMLElement {
             </style>
             <div class="${note.archived ? 'archived' : ''}">
                 <h2>${note.title}</h2>
-                <p>${note.content}</p>
-                <p>Tanggal: ${note.date}</p> 
+                <p>${note.body}</p>
+                <p>Tanggal: ${note.date} ${note.time}</p>
                 <button class="edit">Edit</button>
                 <button class="delete">Hapus</button>
                 <button class="archive">${note.archived ? 'Unarsipkan' : 'Arsipkan'}</button>
